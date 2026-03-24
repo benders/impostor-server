@@ -30,12 +30,17 @@ cd impostor-server
 
 Caddy uses the Cloudflare API to obtain a TLS certificate without needing port 80 open.
 
-1. Go to [Cloudflare dashboard](https://dash.cloudflare.com) → **My Profile** → **API Tokens**
+The token can be either User-level (**My Profile** → **API Tokens**) or Account-level (**Manage Account** → **Account API Tokens**).
+
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com) and navigate to the appropriate API Tokens page
 2. Click **Create Token**
 3. Use the **Edit zone DNS** template
-4. Under **Zone Resources**, select your domain (e.g. `example.com`)
-5. Click **Continue to summary**, then **Create Token**
-6. Copy the token — you won't be able to see it again
+4. Under **Permissions**, ensure both of these are present:
+   - `Zone` / `DNS` / **Edit**
+   - `Zone` / `Zone` / **Read**
+5. Under **Zone Resources**, select your domain (e.g. `example.com`)
+6. Click **Continue to summary**, then **Create Token**
+7. Copy the token — you won't be able to see it again
 
 ### 3. Configure environment
 
