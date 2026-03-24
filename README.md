@@ -6,9 +6,9 @@ For full server configuration options, see the [Impostor documentation](https://
 
 ## What's included
 
-- **Impostor** — the game server, handling UDP game traffic directly on port 22023
-- **Caddy** — an HTTPS reverse proxy for TCP traffic on port 22023, with automatic TLS certificates via Let's Encrypt (no port 80 required)
-- **Plugins**: [Reactor](https://github.com/NuclearPowered/Reactor) and [Impostor.Http](https://github.com/Impostor/Impostor.Http)
+Among Us Plugins installed:
+- [Reactor](https://github.com/NuclearPowered/Reactor)
+- [Impostor.Http](https://github.com/Impostor/Impostor.Http)
 
 ## Prerequisites
 
@@ -19,14 +19,7 @@ For full server configuration options, see the [Impostor documentation](https://
 
 ## Setup
 
-### 1. Clone this repository
-
-```sh
-git clone <this-repo-url>
-cd impostor-server
-```
-
-### 2. Create a Cloudflare API token
+### 1. Create a Cloudflare API token
 
 Caddy uses the Cloudflare API to obtain a TLS certificate without needing port 80 open.
 
@@ -42,7 +35,7 @@ The token can be either User-level (**My Profile** → **API Tokens**) or Accoun
 6. Click **Continue to summary**, then **Create Token**
 7. Copy the token — you won't be able to see it again
 
-### 3. Configure environment
+### 2. Configure environment
 
 Copy the example file and fill in your values:
 
@@ -57,7 +50,7 @@ cp example.env .env
 | `PUBLIC_HOST` | Your server's public hostname (e.g. `impostor.example.com`) |
 | `CF_API_TOKEN` | Cloudflare API token for DNS-based TLS certificate issuance |
 
-### 4. Start the server
+### 3. Start the server
 
 ```sh
 docker compose up -d --build
@@ -65,7 +58,7 @@ docker compose up -d --build
 
 On first start, Caddy will automatically obtain a TLS certificate from Let's Encrypt. This takes about 10–15 seconds.
 
-### 5. Verify everything is running
+### 4. Verify everything is running
 
 ```sh
 docker compose logs -f
@@ -92,21 +85,6 @@ In Among Us, go to **Online** → **Change Server** and enter:
 | `docker compose down` | Stop containers |
 | `docker compose restart impostor` | Restart only the game server |
 | `docker compose logs -f` | Follow logs from all containers |
-| `docker compose logs -f impostor` | Follow game server logs only |
-| `docker compose pull && docker compose up -d` | Update to latest images |
-
-## File structure
-
-```
-.
-├── docker-compose.yml   # Container orchestration
-├── Dockerfile.caddy     # Custom Caddy build with Cloudflare DNS plugin
-├── Caddyfile            # Caddy reverse proxy configuration
-├── config.json          # Impostor server configuration
-├── plugins/             # Impostor plugins (.dll files)
-├── example.env          # Template for environment variables
-└── .env                 # Your local environment variables (keep secret, don't commit)
-```
 
 ## Backups
 
