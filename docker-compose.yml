@@ -12,15 +12,15 @@ services:
     environment:
       - IMPOSTOR_Server__PublicIp=${PUBLIC_HOST}
     volumes:
-      - ./config.json:/app/config.json
-      - ./plugins:/app/plugins
-      # - /path/to/local/libraries:/app/libraries     # Only needed if using external libraries (some plugins may need this)
+      - ./config.json:/app/config.json:ro
+      - ./plugins:/app/plugins:ro
+      # - /path/to/local/libraries:/app/libraries:ro # Only needed if using external libraries (some plugins may need this)
     networks:
       - game-net
 
   caddy:
     # Need to build image manually until caddy-dns/cloudflare#123
-    #   is merged
+    #   is published to the pre-build image
     # image: ghcr.io/caddybuilds/caddy-cloudflare:latest
     build:
       context: .
