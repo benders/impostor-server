@@ -108,6 +108,40 @@ In Among Us, go to **Online** → **Change Server** and enter:
 └── .env                 # Your local environment variables (keep secret, don't commit)
 ```
 
+## Backups
+
+The `caddy_data` volume holds TLS certificates and should be backed up so you don't have to re-issue certificates on a new host.
+
+### Create a backup
+
+```sh
+./backup.sh
+```
+
+This creates a timestamped archive in `backups/`, e.g. `backups/impostor-server_caddy_data-2025-01-01.tar.gz`.
+
+### Restore from a backup
+
+1. Create the volume (skip if it already exists):
+
+   ```sh
+   docker volume create impostor-server_caddy_data
+   ```
+
+2. Populate it from a backup archive:
+
+   ```sh
+   docker run --rm \
+     -v impostor-server_caddy_data:/data \
+     -v "$(pwd)/backups":/backup \
+     alpine \
+     tar -xzvf /backup/impostor-server_caddy_data-YYYY-MM-DD.tar.gz -C /data
+   ```
+
+   Replace `YYYY-MM-DD` with the date of the backup you want to restore.
+
+3. Start the server normally — Caddy will use the restored certificates immediately.
+
 ## Configuration
 
 Server behaviour (anti-cheat, timeouts, compatibility) is controlled by `config.json`. See the [Impostor configuration docs](https://impostor.github.io/Impostor/) for all available options. Restart the impostor container after making changes:
