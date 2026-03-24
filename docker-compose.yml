@@ -17,6 +17,9 @@ services:
       - game-net
 
   caddy:
+    # Need to build image manually until caddy-dns/cloudflare#123
+    #   is merged
+    # image: ghcr.io/caddybuilds/caddy-cloudflare:latest
     build:
       context: .
       dockerfile: Dockerfile.caddy
