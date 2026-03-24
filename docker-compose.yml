@@ -33,7 +33,7 @@ services:
       - CF_API_TOKEN=${CF_API_TOKEN}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
+      - impostor-server_caddy_data:/data
       - caddy_config:/config
     networks:
       - game-net
@@ -42,5 +42,6 @@ networks:
   game-net:
 
 volumes:
-  caddy_data:
+  impostor-server_caddy_data:
+    external: true
   caddy_config:
