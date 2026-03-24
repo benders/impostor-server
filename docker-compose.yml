@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+  impostor:
+    image: aeonlucid/impostor:nightly
+    restart: unless-stopped
+    container_name: impostor
+    ports:
+      - 22023:22023/udp
+    environment:
+      - IMPOSTOR_Server__PublicIp=impostor.example.com
+    volumes:
+      - ./config.json:/app/config.json
+      - ./plugins:/app/plugins
+#      - /path/to/local/libraries:/app/libraries     # Only needed if using external libraries (some plugins may need this)
+    networks:
+      - game-net
+
+  caddy:
+    build:
+      context: .
+      dockerfile: Dockerfile.caddy
+    restart: unless-stopped
+    container_name: caddy
+    ports:
+      - 22023:22023/tcp
+    environment:
+      - CF_API_TOKEN=${CF_API_TOKEN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - game-net
+
+networks:
+  game-net:
+
+volumes:
+  caddy_data:
+  caddy_config:
