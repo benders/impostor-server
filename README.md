@@ -44,32 +44,20 @@ The token can be either User-level (**My Profile** → **API Tokens**) or Accoun
 
 ### 3. Configure environment
 
-Create a `.env` file in this directory:
+Copy the example file and fill in your values:
 
 ```sh
-CF_API_TOKEN=your_cloudflare_token_here
+cp example.env .env
 ```
 
-### 4. Update the hostname
+`.env` variables:
 
-Edit `Caddyfile` and replace `impostor.example.com` with your own hostname:
+| Variable | Description |
+|---|---|
+| `PUBLIC_HOST` | Your server's public hostname (e.g. `impostor.example.com`) |
+| `CF_API_TOKEN` | Cloudflare API token for DNS-based TLS certificate issuance |
 
-```
-impostor.yourdomain.com:22023 {
-    reverse_proxy impostor:8080
-}
-```
-
-Also update `config.json` to set your public hostname:
-
-```json
-"Server": {
-    "PublicIp": "impostor.yourdomain.com",
-    ...
-}
-```
-
-### 5. Start the server
+### 4. Start the server
 
 ```sh
 docker compose up -d --build
@@ -77,7 +65,7 @@ docker compose up -d --build
 
 On first start, Caddy will automatically obtain a TLS certificate from Let's Encrypt. This takes about 10–15 seconds.
 
-### 6. Verify everything is running
+### 5. Verify everything is running
 
 ```sh
 docker compose logs -f
@@ -86,7 +74,7 @@ docker compose logs -f
 Look for this line in the Caddy logs to confirm the certificate was issued:
 
 ```
-certificate obtained successfully  identifier="impostor.yourdomain.com"
+certificate obtained successfully  identifier="impostor.example.com"
 ```
 
 ## Connecting
@@ -116,7 +104,8 @@ In Among Us, go to **Online** → **Change Server** and enter:
 ├── Caddyfile            # Caddy reverse proxy configuration
 ├── config.json          # Impostor server configuration
 ├── plugins/             # Impostor plugins (.dll files)
-└── .env                 # Cloudflare API token (keep secret, don't commit)
+├── example.env          # Template for environment variables
+└── .env                 # Your local environment variables (keep secret, don't commit)
 ```
 
 ## Configuration

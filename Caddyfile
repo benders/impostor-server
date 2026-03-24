@@ -2,6 +2,6 @@
 	acme_dns cloudflare {env.CF_API_TOKEN}
 }
 
-impostor.example.com:22023 {
+{$PUBLIC_HOST}:22023 {
 	reverse_proxy impostor:8080
 }

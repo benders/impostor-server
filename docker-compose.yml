@@ -10,7 +10,7 @@ services:
     expose:
       - "8080"
     environment:
-      - IMPOSTOR_Server__PublicIp=impostor.example.com
+      - IMPOSTOR_Server__PublicIp=${PUBLIC_HOST}
     volumes:
       - ./config.json:/app/config.json
       - ./plugins:/app/plugins
@@ -30,6 +30,7 @@ services:
     ports:
       - 22023:22023/tcp
     environment:
+      - PUBLIC_HOST=${PUBLIC_HOST}
       - CF_API_TOKEN=${CF_API_TOKEN}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
