@@ -4,7 +4,6 @@ services:
   impostor:
     image: aeonlucid/impostor:nightly
     restart: unless-stopped
-    container_name: impostor
     ports:
       - 22023:22023/udp
     expose:
@@ -26,7 +25,6 @@ services:
       context: .
       dockerfile: Dockerfile.caddy
     restart: unless-stopped
-    container_name: caddy
     ports:
       - 22023:22023/tcp
     environment:
