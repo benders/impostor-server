@@ -3,5 +3,5 @@
 }
 
 {$PUBLIC_HOST}:22023 {
-	reverse_proxy impostor:8080
+	reverse_proxy impostor:22023
 }

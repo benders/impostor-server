@@ -7,7 +7,7 @@ services:
     ports:
       - 22023:22023/udp
     expose:
-      - "8080"
+      - "22023"
     environment:
       - IMPOSTOR_Server__PublicIp=${PUBLIC_HOST}
     volumes:
